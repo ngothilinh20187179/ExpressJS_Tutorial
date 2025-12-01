@@ -1,7 +1,15 @@
 # ExpressJS_Tutorial
-Express Basic
+- Routing
+- Middleware (app.js): 
+    + Application-level Middleware
+    + Router-level Middleware
+    + Error-handling Middleware
+    + Built-in middleware  
+    + Third-party middleware
+- Error handling
+- Files handling
 
-## How to create & run ?
+## How to init project ?
 Step 1: Install Node.js
 https://nodejs.org/en/download
 ```bash

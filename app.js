@@ -6,6 +6,7 @@ const basicRoutes = require('./routing/basic');
 const parameterRoutes = require('./routing/parameters')
 const chaining = require('./routing/chaining');
 const errorHandling = require('./error_handling/basic');
+const file_handling = require('./files_handling/index');
 
 // Built-in Middleware
 app.use(express.json()); // Parses JSON data for every incoming request
@@ -42,6 +43,7 @@ premiumRoutes.get('/content', (req, res) => {
     // http://localhost:3000/premium/content?user=premium
 });
 app.use('/premium', premiumRoutes);
+app.use('/files', file_handling);
 
 // Error-handling Middleware (ALWAYS AT THE END)
 app.use((err, req, res, next) => {
