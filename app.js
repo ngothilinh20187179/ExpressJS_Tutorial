@@ -1,12 +1,17 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+require('dotenv').config();
+const PORT = process.env.PORT || 5000;
 
 const basicRoutes = require('./routing/basic');
 const parameterRoutes = require('./routing/parameters')
 const chaining = require('./routing/chaining');
 const errorHandling = require('./error_handling/basic');
 const file_handling = require('./files_handling/index');
+const userRoutes = require('./Databases/routes/userRoutes');
+
+const connectDB = require('./Databases/config/db');
+connectDB();
 
 // Built-in Middleware
 app.use(express.json()); // Parses JSON data for every incoming request
@@ -26,8 +31,10 @@ app.use('/basic', basicRoutes);
 app.use('/parameters', parameterRoutes);
 app.use('/chaining', chaining);
 app.use('/error', errorHandling);
+app.use('/files', file_handling);
+app.use('/users', userRoutes);
 
-// Router-level
+// Router-level Middleware
 const premiumRoutes = express.Router();
 premiumRoutes.use((req, res, next) => {
     const user = req.query.user || 'standard';
@@ -43,7 +50,6 @@ premiumRoutes.get('/content', (req, res) => {
     // http://localhost:3000/premium/content?user=premium
 });
 app.use('/premium', premiumRoutes);
-app.use('/files', file_handling);
 
 // Error-handling Middleware (ALWAYS AT THE END)
 app.use((err, req, res, next) => {
